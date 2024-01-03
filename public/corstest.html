@@ -1,0 +1,209 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+    <body>
+
+<br >
+
+<fieldset>
+<legend>LOCAL</legend>
+
+	<button id="nocors-test">No CORS Test</button>
+	<div id="nocors-message"></div>
+	
+	<br>
+		<button id="cors-test">CORS Test</button>		
+		<div id="cors-message"></div>
+		
+		
+	<br>
+		<button id="cors-preflight-test">CORS Preflight Test</button>		
+		<div id="cors-preflight-message"></div>
+		
+		</fieldset>
+		
+
+		
+		<fieldset>
+<legend>REMOTE</legend>
+
+	<button id="remote-nocors-test">No CORS Test</button>
+	<div id="remote-nocors-message"></div>
+	
+	<br>
+		<button id="remote-cors-test">CORS Test</button>		
+		<div id="remote-cors-message"></div>
+		
+		
+	<br>
+		<button id="remote-cors-preflight-test">CORS Preflight Test</button>		
+		<div id="remote-cors-preflight-message"></div>
+		
+		</fieldset>
+		
+		
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+
+		
+		<script>
+		
+$('#nocors-test').on('click', function() {
+
+    $('#nocors-message').text('');
+    $.ajax({
+        url: "http://api.ruckify.local.com/api/user/nocorstest",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            $('#nocors-message').text(response.message);
+        },
+        error: function(xhr, status) {
+            alert("error:");
+        }
+    });
+});
+
+		
+$('#cors-test').on('click', function() {
+
+    $('#cors-message').text('');
+    $.ajax({
+        url: "http://api.ruckify.local.com/api/user/corstest",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            $('#cors-message').text(response.message);
+        },
+        error: function(xhr, status) {
+            alert("error");
+        }
+    });
+
+	
+});
+
+
+
+	
+$('#cors-preflight-test').on('click', function() {
+
+
+	$.ajax({
+	  url: "http://api.ruckify.local.com/api/user/corstest",
+	  type: "POST",
+	  contentType: "application/json",
+	  dataType: "json",
+	  data: JSON.stringify({
+		key: 1,
+		key2: 2
+	  }),
+		statusCode: {
+			200: function(data) {
+			}
+		},
+		xhrFields: {
+			withCredentials: false
+		},
+			crossDomain: true,
+			  success: function(response) {
+				console.log(response);
+				$('#cors-preflight-message').text(response.message);
+			},
+			error: function(xhr, status) {
+            alert("error");
+        }
+	});
+
+
+});
+
+
+// remote-cors-message
+	
+$('#remote-nocors-test').on('click', function() {
+
+    $('#remote-nocors-message').text('');
+    $.ajax({
+        url: "https://api.ruckify.localhost/api/user/nocorstest",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            $('#remote-nocors-message').text(response.message);
+        },
+        error: function(xhr, status) {
+            alert("error:");
+        }
+    });
+});
+
+		
+$('#remote-cors-test').on('click', function() {
+
+    $('#remote-cors-message').text('');
+    $.ajax({
+        url: "https://api.ruckify.localhost/api/user/corstest",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            $('#remote-cors-message').text(response.message);
+        },
+        error: function(xhr, status) {
+            alert("error");
+        }
+    });
+
+	
+});
+
+
+
+	
+$('#remote-cors-preflight-test').on('click', function() {
+
+		$('#remote-cors-preflight-message').text('');
+
+	$.ajax({
+	  url: "https://api.ruckify.localhost/api/user/corstest",
+	  type: "POST",
+	  contentType: "application/json",
+	  dataType: "json",
+	  data: JSON.stringify({
+		key: 1,
+		key2: 2
+	  }),
+		statusCode: {
+			200: function(data) {
+			}
+		},
+		xhrFields: {
+			withCredentials: false
+		},
+			crossDomain: true,
+			  success: function(response) {
+				console.log(response);
+				$('#remote-cors-preflight-message').text(response.message);
+			},
+			error: function(xhr, status) {
+            alert("error");
+        }
+	});
+
+
+});
+
+
+
+</script>
+    </body>
+</html>

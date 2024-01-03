@@ -1,0 +1,6 @@
+
+# password is yuikopl
+AuthType Basic
+AuthName "Bunking Message Router"
+AuthUserFile /var/www/.htpasswd
+Require valid-user
